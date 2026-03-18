@@ -36,16 +36,41 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
+        // Функция перехода от приветствия к магазину
         function showShop() {
             document.getElementById('welcome-screen').style.display = 'none';
             document.getElementById('shop-screen').style.display = 'block';
         }
 
+        // Функция заказа (теперь с отправкой в n8n)
         function order(item) {
             tg.showConfirm(`Подтвердить заказ: ${item}?`, (confirmed) => {
                 if (confirmed) {
+                    // 1. Отправляем данные в самого бота (появится в чате)
                     tg.sendData(item); 
-                    tg.close();
+                    
+                    // 2. Отправляем данные в твой n8n (твой жесткий Аудитор)
+                    // ЗАМЕНИ ССЫЛКУ НИЖЕ НА СВОЙ WEBHOOK URL ИЗ N8N
+                    const webhookUrl = 'ТВОЙ_WEBHOOK_URL_ИЗ_N8N';
+
+                    fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            product: item,
+                            username: tg.initDataUnsafe.user?.username || "anonymous",
+                            first_name: tg.initDataUnsafe.user?.first_name || "User",
+                            date: new Date().toLocaleString()
+                        })
+                    })
+                    .then(response => {
+                        console.log('Заказ улетел в n8n!');
+                        tg.close(); // Закрываем мини-апку после успеха
+                    })
+                    .catch(error => {
+                        console.error('Ошибка n8n:', error);
+                        tg.close();
+                    });
                 }
             });
         }
