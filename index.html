@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Shop</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #f9f6f2; color: #333; text-align: center; padding: 20px; }
+        .card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        img { width: 100%; border-radius: 10px; }
+        button { background: #e67e94; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-size: 16px; cursor: pointer; }
+        h2 { color: #5a5a5a; }
+    </style>
+</head>
+<body>
+    <h1>Flowers by T</h1>
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=500&q=80" alt="Bouquet">
+        <h2>Весенний нежный букет</h2>
+        <p>Цена: 850 грн</p>
+        <button id="buy-btn">Оплатить через Monobank</button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Раскрыть на всё окно
+
+        document.getElementById('buy-btn').addEventListener('click', () => {
+            // Здесь будет логика отправки данных в n8n
+            tg.showConfirm("Перейти к оплате 850 грн?");
+        });
+    </script>
+</body>
+</html>
