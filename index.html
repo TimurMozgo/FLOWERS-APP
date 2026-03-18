@@ -9,52 +9,20 @@
 </head>
 <body>
 
-    <div id="welcome-screen">
-        <div class="logo">🌷</div>
-        <h1>Flowers by T</h1>
-        <p>Премиальные букеты в Днепре.<br>Авторский стиль и свежесть 24/7.</p>
+    <div id="welcome-screen" class="screen">
+        <div style="font-size: 60px;">🌷</div>
+        <h1>FLOWERS BY T</h1>
         <button class="btn" onclick="showShop()">Смотреть каталог</button>
     </div>
 
-    <div id="shop-screen" style="display: none;">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=500" alt="Bouquet">
-            <h3>Нежный букет</h3>
-            <p class="price">850 грн</p>
+    <div id="shop-screen" class="screen">
+        <h2>КАТАЛОГ</h2>
+        <div style="padding: 20px; border: 1px solid #333; border-radius: 15px;">
+            <p>Букет "Профит" — 850 грн</p>
             <button class="btn" onclick="order('Spring Bouquet')">Заказать</button>
-        </div>
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1561181286-d39736abc71e?w=500" alt="Roses">
-            <h3>Черные Розы</h3>
-            <p class="price">1500 грн</p>
-            <button class="btn" onclick="order('Dark Roses')">Заказать</button>
         </div>
     </div>
 
-    <script>
-        function order(item) {
-        const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
-
-        // Отправляем чистый JSON
-        fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                product: item,
-                username: tg.initDataUnsafe.user?.username || "anonymous"
-            })
-        });
-
-        tg.showConfirm(`Подтвердить заказ: ${item}?`, (confirmed) => {
-            if (confirmed) {
-                tg.sendData(item);
-                tg.close();
-            }
-        });
-    }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
