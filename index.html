@@ -33,47 +33,37 @@
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+        async function order(item) {
+    tg.showConfirm(`Подтвердить заказ: ${item}?`, async (confirmed) => {
+        if (!confirmed) return; // Если нажал Cancel — ничего не делаем
 
-        // Функция перехода от приветствия к магазину
-        function showShop() {
-            document.getElementById('welcome-screen').style.display = 'none';
-            document.getElementById('shop-screen').style.display = 'block';
-        }
+        const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
 
-        // Функция заказа (теперь с отправкой в n8n)
-        function order(item) {
-            tg.showConfirm(`Подтвердить заказ: ${item}?`, (confirmed) => {
-                if (confirmed) {
-                    // 1. Отправляем данные в самого бота (появится в чате)
-                    tg.sendData(item); 
-                    
-                    // 2. Отправляем данные в твой n8n (твой жесткий Аудитор)
-                    // ЗАМЕНИ ССЫЛКУ НИЖЕ НА СВОЙ WEBHOOK URL ИЗ N8N
-                    const webhookUrl = 'ТВОЙ_WEBHOOK_URL_ИЗ_N8N';
-
-                    fetch(webhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            product: item,
-                            username: tg.initDataUnsafe.user?.username || "anonymous",
-                            first_name: tg.initDataUnsafe.user?.first_name || "User",
-                            date: new Date().toLocaleString()
-                        })
-                    })
-                    .then(response => {
-                        console.log('Заказ улетел в n8n!');
-                        tg.close(); // Закрываем мини-апку после успеха
-                    })
-                    .catch(error => {
-                        console.error('Ошибка n8n:', error);
-                        tg.close();
-                    });
-                }
+        try {
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    product: item,
+                    username: tg.initDataUnsafe.user?.username || "anonymous",
+                    first_name: tg.initDataUnsafe.user?.first_name || "User",
+                    date: new Date().toLocaleString()
+                })
             });
+
+            if (response.ok) {
+                tg.sendData(item);
+                tg.close();
+            } else {
+                alert("Ошибка сервера n8n.");
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert("Не удалось связаться с сервером.");
+            tg.close();
         }
+    });
+}
     </script>
 </body>
 </html>
