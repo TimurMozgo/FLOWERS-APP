@@ -33,27 +33,28 @@
     </div>
 
     <script>
-               function order(item) {
-    const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
+        function order(item) {
+        const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
 
-    // Сначала отправляем данные
-    fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            product: item,
-            username: tg.initDataUnsafe.user?.username || "anonymous"
-        })
-    });
+        // Отправляем чистый JSON
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                product: item,
+                username: tg.initDataUnsafe.user?.username || "anonymous"
+            })
+        });
 
-    // Потом показываем подтверждение
-    tg.showConfirm(`Заказать ${item}?`, (confirmed) => {
-        if (confirmed) {
-            tg.sendData(item);
-            tg.close();
-        }
-    });
-}
+        tg.showConfirm(`Подтвердить заказ: ${item}?`, (confirmed) => {
+            if (confirmed) {
+                tg.sendData(item);
+                tg.close();
+            }
+        });
+    }
     </script>
 </body>
 </html>
