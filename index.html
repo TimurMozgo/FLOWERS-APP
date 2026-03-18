@@ -33,37 +33,39 @@
     </div>
 
     <script>
-        async function order(item) {
-    tg.showConfirm(`Подтвердить заказ: ${item}?`, async (confirmed) => {
-        if (!confirmed) return; // Если нажал Cancel — ничего не делаем
+                const tg = window.Telegram.WebApp;
+        tg.expand();
 
-        const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
+        // 1. ПЕРЕХОД К КАТАЛОГУ
+        function showShop() {
+            console.log("Кнопка нажата"); // Для отладки
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('shop-screen').style.display = 'block';
+        }
 
-        try {
-            const response = await fetch(webhookUrl, {
+        // 2. ОТПРАВКА ЗАКАЗА
+        function order(item) {
+            const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
+
+            // Сначала шлем сигнал в n8n (не дожидаясь ответа, чтобы не тупило)
+            fetch(webhookUrl, {
                 method: 'POST',
+                mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     product: item,
-                    username: tg.initDataUnsafe.user?.username || "anonymous",
-                    first_name: tg.initDataUnsafe.user?.first_name || "User",
-                    date: new Date().toLocaleString()
+                    user: tg.initDataUnsafe.user?.username || "client"
                 })
             });
 
-            if (response.ok) {
-                tg.sendData(item);
-                tg.close();
-            } else {
-                alert("Ошибка сервера n8n.");
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-            alert("Не удалось связаться с сервером.");
-            tg.close();
+            // Сразу показываем подтверждение от самого Telegram
+            tg.showConfirm(`Заказать ${item}?`, (confirmed) => {
+                if (confirmed) {
+                    tg.sendData(item); // Отправляет текст в чат боту
+                    tg.close();
+                }
+            });
         }
-    });
-}
     </script>
 </body>
 </html>
