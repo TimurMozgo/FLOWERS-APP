@@ -27,14 +27,22 @@ function showCategory(type) {
             { id: 'Tulips', name: 'Тюльпаны', price: 650, icon: '🌷' },
             { id: 'Sunflowers', name: 'Подсолнухи', price: 900, icon: '🌻' }
         ];
-    } else if (type === 'dacha') {
+   } else if (type === 'dacha') {
         title.innerText = "ДЛЯ ДАЧИ";
         items = [
-            { id: 'Tuya', name: 'Туя Смарагд', price: 450, icon: '🌲' },
-            { id: 'Lawn', name: 'Газон (рулон)', price: 300, icon: '🌱' },
-            // ТОВАРЫ С КАРТИНКАМИ
-            { id: 'Shovel', name: 'Лопата (титан)', price: 800, imgUrl: 'https://cdn.pixabay.com/photo/2016/09/27/15/21/shovel-1698656_1280.jpg' },
-            { id: 'Gloves', name: 'Перчатки садовые', price: 150, imgUrl: 'https://cdn.pixabay.com/photo/2020/03/17/20/19/gardening-gloves-4941913_1280.jpg' }
+            { name: 'Туя Смарагд', price: 450, icon: '🌲' },
+            { name: 'Газон (рулон)', price: 300, icon: '🌱' },
+            // Новые надежные ссылки на картинки
+            { 
+                name: 'Лопата (титан)', 
+                price: 800, 
+                imgUrl: 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=300&q=80' 
+            },
+            { 
+                name: 'Перчатки садовые', 
+                price: 150, 
+                imgUrl: 'https://images.unsplash.com/photo-1589923158776-cb4485d99fd6?auto=format&fit=crop&w=300&q=80' 
+            }
         ];
     }
 

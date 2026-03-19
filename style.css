@@ -1,7 +1,6 @@
 :root {
-    --accent: #a020f0; /* Фиолетовый */
-    --bg-card: #1c1c1e; /* Темно-серый для карточек */
-    --accent-hover: #b347f9; /* Чуть светлее для эффекта наведения */
+    --accent: #a020f0; /* Твой фиолетовый */
+    --bg-card: #1c1c1e; /* Темно-серый */
 }
 
 body {
@@ -10,24 +9,21 @@ body {
     color: #fff;
     margin: 0;
     text-align: center;
-    overflow-x: hidden; /* Чтобы ничего не дергалось в Telegram */
+    overflow-x: hidden;
 }
 
-/* ЭКРАНЫ */
+/* Общий стиль экранов */
 .screen, .shop-screen {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Центрируем контент (включая кнопку каталога) */
+    justify-content: flex-start;
     min-height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
+    padding-bottom: 20px; /* Добавил отступ снизу */
 }
 
 #shop-screen {
-    display: none; 
-    justify-content: flex-start; /* В каталоге товары пускай идут сверху */
-    padding-top: 40px;
+    display: none; /* Скрыт по умолчанию */
 }
 
 /* СЕТКА (2 в ряд) */
@@ -35,9 +31,10 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
+    padding: 20px;
     width: 100%;
-    max-width: 500px; /* Чтобы на планшетах не растягивалось на весь мир */
-    margin-top: 20px;
+    box-sizing: border-box;
+    /* Убрал padding-bottom, он будет у экрана */
 }
 
 /* КАРТОЧКА */
@@ -46,62 +43,62 @@ body {
     border-radius: 20px;
     padding: 15px;
     border: 1px solid #333;
+    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    /* Добавляем плавность */
-    transition: transform 0.1s ease-in-out;
-}
-
-/* Эффект при нажатии на карточку в Telegram */
-.card:active {
-    transform: scale(0.97);
+    /* Убрал justify-content space-between, чтобы контролировать отступы точнее */
 }
 
 /* ИКОНКА / КАРТИНКА */
 .icon, .card-img {
     font-size: 50px;
     margin-bottom: 10px;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.card-img {
-    border: 3px solid #333;
-    background-color: #111;
+    width: 100px; /* Фиксированная ширина */
+    height: 100px; /* Фиксированная высота */
+    object-fit: cover; /* Заполняет квадрат */
+    border-radius: 50%; /* Круглые, как эмодзи */
+    background-color: #000; /* Фон пока картинки грузятся */
+    border: 3px solid #333; /* Небольшая обводка */
 }
 
 /* Текст внутри карточки */
-.product-name { font-size: 16px; margin: 0; font-weight: bold; }
-.price { font-size: 18px; color: #aaa; margin: 5px 0 15px 0; font-weight: bold; }
+.product-name { 
+    font-size: 16px; 
+    margin: 0 0 5px 0; /* Отступ 5px снизу к цене */
+    font-weight: bold; 
+}
+.price { 
+    font-size: 18px; 
+    color: #aaa; 
+    margin: 0 0 15px 0; /* РЕГУЛИРОВКА: Отступ 15px снизу к кнопке Заказать */
+    font-weight: bold; 
+}
 
-/* КНОПКА */
+/* КНОПКА ЗАКАЗАТЬ */
 .btn {
     background: var(--accent);
     color: #fff;
     border: none;
-    padding: 14px 20px; /* Чуть увеличил отступы для удобства пальца */
-    border-radius: 14px;
+    padding: 12px 20px;
+    border-radius: 12px;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
     width: 100%;
-    transition: background 0.2s, transform 0.1s;
-    -webkit-tap-highlight-color: transparent; /* Убираем синюю рамку при нажатии в мобилках */
 }
 
-/* Оживляем кнопку */
-.btn:active {
-    background: var(--accent-hover);
-    transform: scale(0.95);
-}
-
-/* Кнопка "Назад" - сделаем её более спокойной */
+/* КНОПКА "НАЗАД" */
 .btn-back {
-    background: #2c2c2e;
-    margin-top: 30px;
-    width: 80%;
+    background: #2c2c2e; /* Более спокойный темно-серый */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    width: 80%; /* На 80% ширины */
+    margin-top: 40px; 
+    margin-bottom: 20px;
 }
