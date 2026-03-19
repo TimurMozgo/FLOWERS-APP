@@ -45,12 +45,24 @@ body {
     align-items: center;
 }
 
-.icon, .card-img {
-    width: 100px;
+/* Настройки чисто для КАРТИНОК (лопата, перчатки) */
+.card-img {
+    width: 100px; /* Размер фото */
     height: 100px;
-    border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 15px; /* Отступ под картинкой */
+    border-radius: 50%;
+    border: 3px solid #333;
+    margin-bottom: 15px; /* Тот самый отступ от текста */
+}
+
+/* Настройки чисто для ЭМОДЗИ (туя, газон, букеты) */
+.icon {
+    font-size: 70px; /* ВОТ ЗДЕСЬ МЫ ВОЗВРАЩАЕМ ИМ РАЗМЕР */
+    height: 100px;   /* Высота такая же как у фото, чтобы карточки были ровные */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px; /* Тот самый отступ от текста */
 }
 
 /* 1. ИСПРАВЛЕНИЕ: Отступ текста от кнопки заказа */
