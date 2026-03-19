@@ -10,23 +10,32 @@ body {
     color: #fff;
     margin: 0;
     text-align: center;
+    overflow-x: hidden; /* Чтобы не было лишней прокрутки */
 }
 
+/* ОБЩИЙ СТИЛЬ ЭКРАНОВ */
 .screen, .shop-screen {
-    display: flex;
+    display: none; /* ВСЕ экраны скрыты по умолчанию */
     flex-direction: column;
     align-items: center;
     justify-content: center; 
     min-height: 100vh;
     padding: 20px;
+    box-sizing: border-box;
 }
 
+/* ГЛАВНЫЙ ЭКРАН */
+#welcome-screen {
+    display: flex; /* Показываем только первый экран */
+}
+
+/* КАТЕГОРИИ И МАГАЗИН */
 #categories-screen, #shop-screen {
-    display: none;
     justify-content: flex-start;
     padding-top: 30px;
 }
 
+/* СЕТКА */
 .shop-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -35,42 +44,42 @@ body {
     max-width: 500px;
 }
 
+/* КАРТОЧКА */
 .card {
     background: var(--bg-card);
     border-radius: 20px;
-    padding: 20px 15px; /* Увеличил внутренний отступ сверху/снизу */
+    padding: 20px 15px;
     border: 1px solid #333;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.1s;
 }
 
-/* --- UI КОНТЕНТА: ЭМОДЗИ И КАРТИНКИ --- */
+.card:active {
+    transform: scale(0.98); /* Эффект нажатия всей карточки */
+}
 
-/* Настройки для КАРТИНОК товаров (Лопата, Перчатки и новые) */
+/* КАРТИНКИ ТОВАРОВ */
 .card-img {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 12px; /* РЕГУЛИРОВКА: Слегка закругленные, а не круглые */
-    margin-bottom: 15px; /* Отступ до текста */
+    border-radius: 12px; /* Слегка закругленные */
+    margin-bottom: 15px;
 }
-/* Настройки для ЭМОДЗИ категорий (Букеты, Дача и новые) */
+
+/* ЭМОДЗИ КАТЕГОРИЙ */
 .icon {
-    font-size: 70px; /* РЕГУЛИРОВКА: ВОЗВРАЩАЕМ ИМ РАЗМЕР И МОЩЬ! */
-    height: 100px;   /* Высота блока, чтобы карточки были ровные */
+    font-size: 70px; /* Крупные и мощные */
+    height: 100px;   
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px; /* Отступ до текста */
-    transition: transform 0.2s;
+    margin-bottom: 15px;
 }
 
-.card:active .icon {
-    transform: scale(1.1); /* Легкий эффект увеличения при нажатии */
-}
-
-/* 1. ИСПРАВЛЕНИЕ: Отступ текста от кнопки заказа */
+/* ТЕКСТ */
 .product-name { 
     font-size: 16px; 
     margin: 5px 0; 
@@ -81,9 +90,10 @@ body {
     font-size: 18px; 
     color: #aaa; 
     font-weight: bold;
-    margin-bottom: 25px !important; /* Увеличил отступ ДО КНОПКИ */
+    margin-bottom: 25px !important; /* Отступ до кнопки */
 }
 
+/* КНОПКИ */
 .btn {
     background: var(--accent);
     color: #fff;
@@ -92,12 +102,18 @@ body {
     border-radius: 12px;
     font-weight: bold;
     width: 100%;
+    cursor: pointer;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* 2. ИСПРАВЛЕНИЕ: Отступ кнопки НАЗАД от карточек */
+.btn:active {
+    background: var(--accent-hover);
+}
+
 .btn-back {
     background: #2c2c2e;
-    margin-top: 50px !important; /* Мощный отступ СВЕРХУ от сетки */
+    margin-top: 50px !important;
     margin-bottom: 30px;
     width: 80%;
 }
