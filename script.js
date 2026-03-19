@@ -1,13 +1,13 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Из приветствия в категории
+// Переход от приветствия к категориям
 function showCategories() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('categories-screen').style.display = 'flex';
 }
 
-// Показ конкретной категории
+// Показ товаров выбранной категории
 function showCategory(type) {
     document.getElementById('categories-screen').style.display = 'none';
     const shop = document.getElementById('shop-screen');
@@ -15,7 +15,7 @@ function showCategory(type) {
     const title = document.getElementById('category-title');
     
     shop.style.display = 'flex';
-    grid.innerHTML = ''; // Очистка
+    grid.innerHTML = ''; // Очистка сетки
 
     let items = [];
 
@@ -31,19 +31,28 @@ function showCategory(type) {
         title.innerText = "ДЛЯ ДАЧИ";
         items = [
             { id: 'Tuya', name: 'Туя Смарагд', price: 450, icon: '🌲' },
-            { id: 'Lawn', name: 'Газон (рулон)', price: 300, icon: '🌱' }
+            { id: 'Lawn', name: 'Газон (рулон)', price: 300, icon: '🌱' },
+            // ТОВАРЫ С КАРТИНКАМИ
+            { id: 'Shovel', name: 'Лопата (титан)', price: 800, imgUrl: 'https://cdn.pixabay.com/photo/2016/09/27/15/21/shovel-1698656_1280.jpg' },
+            { id: 'Gloves', name: 'Перчатки садовые', price: 150, imgUrl: 'https://cdn.pixabay.com/photo/2020/03/17/20/19/gardening-gloves-4941913_1280.jpg' }
         ];
     }
 
-    // Генерация карточек по твоему шаблону
+    // Создание карточек
     items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
+        
+        // Если есть ссылка на картинку - ставим её, если нет - ставим эмодзи
+        const media = item.imgUrl 
+            ? `<img src="${item.imgUrl}" class="card-img" style="width:100px; height:100px; border-radius:50%; object-fit:cover; margin-bottom:10px;">`
+            : `<div class="icon">${item.icon}</div>`;
+
         card.innerHTML = `
-            <div class="icon">${item.icon}</div>
+            ${media}
             <p class="product-name">${item.name}</p>
             <p class="price">${item.price} грн</p>
-            <button class="btn" onclick="order('${item.id}', ${item.price})">Заказать</button>
+            <button class="btn" onclick="order('${item.name}', ${item.price})">Заказать</button>
         `;
         grid.appendChild(card);
     });
@@ -54,13 +63,13 @@ function goBack() {
     document.getElementById('categories-screen').style.display = 'flex';
 }
 
-// Твоя рабочая функция заказа с ожиданием ответа
+// Функция заказа
 function order(item, price) {
     const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
 
     tg.showConfirm(`Заказать ${item} за ${price} грн?`, (confirmed) => {
         if (confirmed) {
-            document.body.innerHTML = '<div class="screen"><h1>Оформляем...</h1></div>';
+            document.body.innerHTML = '<div class="screen"><h2 style="color:white;">Оформляем заказ...</h2></div>';
             
             fetch(webhookUrl, {
                 method: 'POST',
@@ -73,7 +82,7 @@ function order(item, price) {
             })
             .then(res => res.text())
             .then(msg => {
-                document.body.innerHTML = `<div class="screen"><h1>✅ ${msg}</h1></div>`;
+                document.body.innerHTML = `<div class="screen"><h2 style="color:white;">✅ ${msg}</h2></div>`;
                 setTimeout(() => tg.close(), 3000);
             });
         }

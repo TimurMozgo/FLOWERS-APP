@@ -1,6 +1,7 @@
 :root {
     --accent: #a020f0; /* Фиолетовый */
     --bg-card: #1c1c1e; /* Темно-серый для карточек */
+    --accent-hover: #b347f9; /* Чуть светлее для эффекта наведения */
 }
 
 body {
@@ -9,29 +10,34 @@ body {
     color: #fff;
     margin: 0;
     text-align: center;
+    overflow-x: hidden; /* Чтобы ничего не дергалось в Telegram */
 }
 
-/* Общий стиль экранов */
+/* ЭКРАНЫ */
 .screen, .shop-screen {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center; /* Центрируем контент (включая кнопку каталога) */
     min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #shop-screen {
-    display: none; /* Скрыт по умолчанию */
+    display: none; 
+    justify-content: flex-start; /* В каталоге товары пускай идут сверху */
+    padding-top: 40px;
 }
 
 /* СЕТКА (2 в ряд) */
 .shop-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 одинаковые колонки */
-    gap: 15px; /* Отступ между карточками */
-    padding: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
     width: 100%;
-    box-sizing: border-box;
+    max-width: 500px; /* Чтобы на планшетах не растягивалось на весь мир */
+    margin-top: 20px;
 }
 
 /* КАРТОЧКА */
@@ -40,17 +46,32 @@ body {
     border-radius: 20px;
     padding: 15px;
     border: 1px solid #333;
-    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    /* Добавляем плавность */
+    transition: transform 0.1s ease-in-out;
 }
 
-/* ИКОНКА */
-.icon {
+/* Эффект при нажатии на карточку в Telegram */
+.card:active {
+    transform: scale(0.97);
+}
+
+/* ИКОНКА / КАРТИНКА */
+.icon, .card-img {
     font-size: 50px;
     margin-bottom: 10px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.card-img {
+    border: 3px solid #333;
+    background-color: #111;
 }
 
 /* Текст внутри карточки */
@@ -62,10 +83,25 @@ body {
     background: var(--accent);
     color: #fff;
     border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
+    padding: 14px 20px; /* Чуть увеличил отступы для удобства пальца */
+    border-radius: 14px;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
-    width: 100%; /* На всю ширину карточки */
+    width: 100%;
+    transition: background 0.2s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent; /* Убираем синюю рамку при нажатии в мобилках */
+}
+
+/* Оживляем кнопку */
+.btn:active {
+    background: var(--accent-hover);
+    transform: scale(0.95);
+}
+
+/* Кнопка "Назад" - сделаем её более спокойной */
+.btn-back {
+    background: #2c2c2e;
+    margin-top: 30px;
+    width: 80%;
 }
