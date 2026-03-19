@@ -58,5 +58,16 @@
     <button class="btn" style="background: #333; width: 80%; margin-bottom: 20px;" onclick="goBack()">⬅️ Назад</button>
 </div>
     <script src="script.js"></script>
+
+    <div id="product-detail-screen" class="screen" style="display: none;">
+        <div id="detail-image-container"></div>
+        <h2 id="detail-name"></h2>
+        <p id="detail-description" style="padding: 0 20px; color: #aaa;"></p>
+        <h3 id="detail-price" style="font-size: 24px;"></h3>
+        
+        <button class="btn" id="detail-order-btn" style="width: 80%; margin-top: 20px;">Заказать</button>
+        <button class="btn" style="background: #333; width: 80%; margin-top: 15px;" onclick="closeDetail()">⬅️ Назад в каталог</button>
+    </div>
+    
 </body>
 </html>

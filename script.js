@@ -1,81 +1,78 @@
-// 1. Инициализация Telegram WebApp
 const tg = window.Telegram.WebApp;
-tg.expand(); // Разворачиваем на весь экран
+tg.expand();
 
-// 2. Навигация: Переход с главного экрана к категориям
-// Это оживляет кнопку "Смотреть каталог"
+// 1. ТВОЙ WEBHOOK ИЗ N8N (Вставь сюда свою ссылку)
+const n8n_webhook = 'ТВОЙ_WEBHOOK_URL_ИЗ_N8N';
+
+// 2. НАВИГАЦИЯ
 function showCategories() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('categories-screen').style.display = 'flex';
 }
 
-// 3. Навигация: Переход от товаров назад к категориям
 function goBack() {
     document.getElementById('shop-screen').style.display = 'none';
     document.getElementById('categories-screen').style.display = 'flex';
 }
 
-// 4. Основная функция: Показ товаров выбранной категории
+function closeDetail() {
+    document.getElementById('product-detail-screen').style.display = 'none';
+    document.getElementById('shop-screen').style.display = 'flex';
+}
+
+// 3. ОТРИСОВКА КАТЕГОРИЙ
 function showCategory(type) {
-    // Скрываем экран категорий
     document.getElementById('categories-screen').style.display = 'none';
-    
     const shop = document.getElementById('shop-screen');
     const grid = document.getElementById('products-grid');
     const title = document.getElementById('category-title');
     
-    // Показываем экран магазина
     shop.style.display = 'flex';
-    grid.innerHTML = ''; // Очищаем сетку перед добавлением новых товаров
+    grid.innerHTML = ''; 
 
     let items = [];
 
-    // Наполняем базу товаров (6 категорий как ты просил)
+    // Список товаров
     if (type === 'bouquets') {
         title.innerText = "БУКЕТЫ";
         items = [
-            { name: 'Букет "Весна"', price: 850, icon: '🌸' },
+            { 
+                name: 'Букет Весна', 
+                price: 850, 
+                imgUrl: 'https://images.unsplash.com/photo-1591886840935-2fbf28cddbc1?w=600',
+                description: 'Нежный весенний букет из тюльпанов и мимозы. Идеальный подарок для весеннего настроения!'
+            },
             { name: 'Розы Микс', price: 1200, icon: '🌹' }
         ];
     } else if (type === 'dacha') {
         title.innerText = "ДЛЯ ДАЧИ";
         items = [
             { name: 'Туя Смарагд', price: 450, icon: '🌲' },
-            { name: 'Лопата (титан)', price: 800, imgUrl: 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=300' },
-            { name: 'Перчатки', price: 150, imgUrl: 'https://images.unsplash.com/photo-1589923158776-cb4485d99fd6?w=300' }
+            { name: 'Газон (рулон)', price: 300, icon: '🌱' }
         ];
     } else if (type === 'seeds') {
         title.innerText = "СЕМЕНА";
-        items = [
-            { name: 'Петуния', price: 120, icon: '🌱' },
-            { name: 'Астры', price: 90, icon: '🌻' }
-        ];
+        items = [{ name: 'Петуния', price: 120, icon: '🌸' }];
     } else if (type === 'fertilizers') {
         title.innerText = "УДОБРЕНИЯ";
-        items = [
-            { name: 'Азот', price: 250, icon: '🧪' },
-            { name: 'Органика', price: 300, icon: '💩' }
-        ];
+        items = [{ name: 'Азот', price: 250, icon: '🧪' }];
     } else if (type === 'care') {
         title.innerText = "ИНСТРУМЕНТЫ";
-        items = [
-            { name: 'Секатор', price: 400, icon: '✂️' },
-            { name: 'Лейка', price: 350, icon: '🚿' }
-        ];
+        items = [{ name: 'Секатор', price: 400, icon: '✂️' }];
     } else if (type === 'pots') {
         title.innerText = "КОМНАТНЫЕ";
-        items = [
-            { name: 'Драцена', price: 900, icon: '🪴' },
-            { name: 'Кактус', price: 200, icon: '🌵' }
-        ];
+        items = [{ name: 'Драцена', price: 900, icon: '🪴' }];
     }
 
-    // Создаем карточки товаров программно
     items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
         
-        // Выбираем: показать фото или эмодзи
+        // ЛОГИКА: Если это Букет Весна — открываем детали, иначе — просто заказ
+        if (item.name === 'Букет Весна') {
+            card.onclick = () => openDetail(item);
+        }
+
         const media = item.imgUrl 
             ? `<img src="${item.imgUrl}" class="card-img">`
             : `<div class="icon">${item.icon}</div>`;
@@ -84,47 +81,54 @@ function showCategory(type) {
             ${media}
             <p class="product-name">${item.name}</p>
             <p class="price">${item.price} грн</p>
-            <button class="btn" onclick="order('${item.name}', ${item.price})">Заказать</button>
+            <button class="btn">${item.name === 'Букет Весна' ? 'Подробнее' : 'Заказать'}</button>
         `;
         grid.appendChild(card);
     });
 }
 
-function order(itemName, itemPrice) {
-    tg.showConfirm(`Заказать ${itemName} за ${itemPrice} грн?`, (confirmed) => {
-        if (confirmed) {
-            // Показываем плашку "Подождите..."
-            tg.MainButton.setText("ОТПРАВКА ЗАКАЗА...");
-            tg.MainButton.show();
-            tg.MainButton.disable();
+// 4. ОТКРЫТИЕ ДЕТАЛЕЙ ТОВАРА
+function openDetail(item) {
+    document.getElementById('shop-screen').style.display = 'none';
+    const detail = document.getElementById('product-detail-screen');
+    detail.style.display = 'flex';
 
-            // 2. Данные для отправки
-            const orderData = {
-                user: tg.initDataUnsafe.user?.username || "Anonymous",
-                userId: tg.initDataUnsafe.user?.id,
-                product: itemName,
-                price: itemPrice,
-                date: new Date().toLocaleString()
+    document.getElementById('detail-image-container').innerHTML = item.imgUrl 
+        ? `<img src="${item.imgUrl}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 0 0 20px 20px;">`
+        : `<div class="icon" style="font-size: 100px;">${item.icon}</div>`;
+
+    document.getElementById('detail-name').innerText = item.name;
+    document.getElementById('detail-description').innerText = item.description || "Отличный выбор для подарка!";
+    document.getElementById('detail-price').innerText = `${item.price} грн`;
+
+    document.getElementById('detail-order-btn').onclick = () => order(item.name, item.price);
+}
+
+// 5. ОТПРАВКА В N8N
+function order(name, price) {
+    tg.showConfirm(`Заказать ${name} за ${price} грн?`, (confirmed) => {
+        if (confirmed) {
+            tg.MainButton.setText("ОТПРАВКА...");
+            tg.MainButton.show();
+
+            const data = {
+                user: tg.initDataUnsafe.user?.username || "Guest",
+                product: name,
+                price: price
             };
 
-            // 3. ОТПРАВКА В n8n (замени URL на свой из n8n)
-            fetch('https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6', {
+            fetch(n8n_webhook, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
+                body: JSON.stringify(data)
             })
-            .then(response => {
-                if (response.ok) {
-                    tg.showAlert("✅ Заказ отправлен! Аудитор скоро свяжется с вами.");
-                } else {
-                    tg.showAlert("❌ Ошибка при отправке. Попробуйте позже.");
-                }
+            .then(() => {
+                tg.showAlert("✅ Аудитор принял заказ!");
+                tg.MainButton.hide();
             })
-            .catch(error => {
-                tg.showAlert("⚠️ Ошибка сети. Проверьте соединение.");
-            })
-            .finally(() => {
-                tg.MainButton.hide(); // Прячем кнопку загрузки
+            .catch(() => {
+                tg.showAlert("❌ Ошибка отправки!");
+                tg.MainButton.hide();
             });
         }
     });

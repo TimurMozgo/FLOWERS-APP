@@ -117,3 +117,54 @@ body {
     margin-bottom: 30px;
     width: 80%;
 }
+
+/* ЭКРАН ПОДРОБНОГО ТОВАРА */
+#product-detail-screen {
+    padding: 0; /* Картинка будет вплотную к верхнему краю */
+    background: #000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+#detail-image-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#detail-image-container img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 0 0 25px 25px; /* Закругление только снизу */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+#detail-name {
+    font-size: 28px;
+    margin: 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#detail-description {
+    font-size: 16px;
+    color: #bbb;
+    line-height: 1.5;
+    padding: 0 25px;
+    margin-bottom: 20px;
+}
+
+#detail-price {
+    font-size: 26px;
+    color: var(--accent);
+    margin-bottom: 30px;
+}
+
+/* Фикс для кнопок на детальном экране */
+#product-detail-screen .btn {
+    width: 85%;
+    margin-bottom: 10px;
+}
