@@ -1,15 +1,31 @@
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+// Эта функция отвечает за кнопку "Смотреть каталог"
+function showShop() {
+    const welcome = document.getElementById('welcome-screen');
+    const shop = document.getElementById('shop-screen');
+    
+    if (welcome && shop) {
+        welcome.style.display = 'none';
+        shop.style.display = 'flex';
+    } else {
+        console.error("Не найдены экраны welcome-screen или shop-screen!");
+    }
+}
+
+// Эта функция отвечает за заказ
 function order(item, price) {
     const webhookUrl = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
 
-    // Сначала спрашиваем подтверждение
     tg.showConfirm(`Заказать ${item} за ${price} грн?`, (confirmed) => {
         if (confirmed) {
-            // Если нажал "ОК", показываем лоадер или текст, чтобы клиент не тыкал лишний раз
-            document.body.innerHTML = `<div style="text-align:center; margin-top:50%; color:white; font-family:sans-serif;">
-                <h2>Оформляем заказ...</h2>
-            </div>`;
+            // Показываем экран загрузки
+            document.body.innerHTML = `
+                <div style="text-align:center; margin-top:50%; color:white; font-family:sans-serif;">
+                    <h2>Оформляем заказ...</h2>
+                </div>`;
 
-            // Теперь отправляем данные в n8n
             fetch(webhookUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -19,20 +35,22 @@ function order(item, price) {
                     username: tg.initDataUnsafe.user?.username || "Grinzze"
                 })
             })
-            .then(response => response.text()) // Ждем текст от n8n (тот самый Respond to Webhook)
+            .then(response => response.text())
             .then(message => {
-                // Выводим ответ от Аудитора на экран
-                document.body.innerHTML = `<div style="text-align:center; margin-top:50%; color:white; font-family:sans-serif;">
-                    <h2 style="color: #4CAF50;">✅ Готово!</h2>
-                    <p>${message}</p>
-                </div>`;
-
-                // Закрываем через 3 секунды, чтобы клиент прочитал
+                // Показываем ответ от n8n
+                document.body.innerHTML = `
+                    <div style="text-align:center; margin-top:50%; color:white; font-family:sans-serif;">
+                        <h2 style="color: #4CAF50;">✅ Готово!</h2>
+                        <p>${message}</p>
+                    </div>`;
+                
+                // Закрываем через 3.5 секунды
                 setTimeout(() => {
                     tg.close();
                 }, 3500);
             })
             .catch(error => {
+                console.error('Ошибка:', error);
                 alert("Ошибка связи с сервером");
                 tg.close();
             });
