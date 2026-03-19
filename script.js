@@ -90,11 +90,42 @@ function showCategory(type) {
     });
 }
 
-// 5. Функция заказа
-function order(item, price) {
-    tg.showConfirm(`Вы хотите заказать ${item} за ${price} грн?`, (confirmed) => {
+function order(itemName, itemPrice) {
+    tg.showConfirm(`Заказать ${itemName} за ${itemPrice} грн?`, (confirmed) => {
         if (confirmed) {
-            tg.showAlert("✅ Заказ отправлен Аудитору! С вами скоро свяжутся.");
+            // Показываем плашку "Подождите..."
+            tg.MainButton.setText("ОТПРАВКА ЗАКАЗА...");
+            tg.MainButton.show();
+            tg.MainButton.disable();
+
+            // 2. Данные для отправки
+            const orderData = {
+                user: tg.initDataUnsafe.user?.username || "Anonymous",
+                userId: tg.initDataUnsafe.user?.id,
+                product: itemName,
+                price: itemPrice,
+                date: new Date().toLocaleString()
+            };
+
+            // 3. ОТПРАВКА В n8n (замени URL на свой из n8n)
+            fetch('https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    tg.showAlert("✅ Заказ отправлен! Аудитор скоро свяжется с вами.");
+                } else {
+                    tg.showAlert("❌ Ошибка при отправке. Попробуйте позже.");
+                }
+            })
+            .catch(error => {
+                tg.showAlert("⚠️ Ошибка сети. Проверьте соединение.");
+            })
+            .finally(() => {
+                tg.MainButton.hide(); // Прячем кнопку загрузки
+            });
         }
     });
 }
