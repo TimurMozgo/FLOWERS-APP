@@ -32,7 +32,7 @@ function showCategory(type) {
 
     let items = [];
 
-    // Список товаров
+    // Список товаров с картинками и описаниями
     if (type === 'bouquets') {
         title.innerText = "БУКЕТЫ";
         items = [
@@ -42,36 +42,77 @@ function showCategory(type) {
                 imgUrl: 'https://images.unsplash.com/photo-1591886840935-2fbf28cddbc1?w=600',
                 description: 'Нежный весенний букет из тюльпанов и мимозы. Идеальный подарок для весеннего настроения!'
             },
-            { name: 'Розы Микс', price: 1200, icon: '🌹' }
+            { 
+                name: 'Розы Микс', 
+                price: 1200, 
+                imgUrl: 'https://images.unsplash.com/photo-1548610371-9545b5b1499f?w=600',
+                description: 'Классическое сочетание отборных роз разных оттенков. Символ искренних чувств.' 
+            }
         ];
     } else if (type === 'dacha') {
         title.innerText = "ДЛЯ ДАЧИ";
         items = [
-            { name: 'Туя Смарагд', price: 450, icon: '🌲' },
-            { name: 'Газон (рулон)', price: 300, icon: '🌱' }
+            { 
+                name: 'Туя Смарагд', 
+                price: 450, 
+                imgUrl: 'https://images.unsplash.com/photo-1599021456807-25db0f974333?w=600',
+                description: 'Идеальное вечнозеленое дерево для вашей живой изгороди. Морозостойкая и неприхотливая.' 
+            },
+            { 
+                name: 'Газон (рулон)', 
+                price: 300, 
+                imgUrl: 'https://images.unsplash.com/photo-1533460004989-cef01064af7c?w=600',
+                description: 'Мягкий и густой изумрудный газон за один день. Высокая приживаемость.' 
+            }
         ];
     } else if (type === 'seeds') {
         title.innerText = "СЕМЕНА";
-        items = [{ name: 'Петуния', price: 120, icon: '🌸' }];
+        items = [
+            { 
+                name: 'Петуния', 
+                price: 120, 
+                imgUrl: 'https://images.unsplash.com/photo-1622383529357-37b773795293?w=600',
+                description: 'Смесь окрасок для кашпо и балконов. Высокая всхожесть и яркое цветение.' 
+            }
+        ];
     } else if (type === 'fertilizers') {
         title.innerText = "УДОБРЕНИЯ";
-        items = [{ name: 'Азот', price: 250, icon: '🧪' }];
+        items = [
+            { 
+                name: 'Азот', 
+                price: 250, 
+                imgUrl: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600',
+                description: 'Концентрированное удобрение для быстрого роста и ярко-зеленой листвы.' 
+            }
+        ];
     } else if (type === 'care') {
         title.innerText = "ИНСТРУМЕНТЫ";
-        items = [{ name: 'Секатор', price: 400, icon: '✂️' }];
+        items = [
+            { 
+                name: 'Секатор', 
+                price: 400, 
+                imgUrl: 'https://images.unsplash.com/photo-1598965675045-45c5e72c7d05?w=600',
+                description: 'Профессиональный инструмент с титановым покрытием. Режет как по маслу.' 
+            }
+        ];
     } else if (type === 'pots') {
         title.innerText = "КОМНАТНЫЕ";
-        items = [{ name: 'Драцена', price: 900, icon: '🪴' }];
+        items = [
+            { 
+                name: 'Драцена', 
+                price: 900, 
+                imgUrl: 'https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=600',
+                description: 'Домашняя пальма, которая очищает воздух и не требует частого полива.' 
+            }
+        ];
     }
 
     items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
         
-        // ЛОГИКА: Если это Букет Весна — открываем детали, иначе — просто заказ
-        if (item.name === 'Букет Весна') {
-            card.onclick = () => openDetail(item);
-        }
+        // Теперь ЛЮБАЯ карточка открывает экран подробностей
+        card.onclick = () => openDetail(item);
 
         const media = item.imgUrl 
             ? `<img src="${item.imgUrl}" class="card-img">`
@@ -81,7 +122,7 @@ function showCategory(type) {
             ${media}
             <p class="product-name">${item.name}</p>
             <p class="price">${item.price} грн</p>
-            <button class="btn">${item.name === 'Букет Весна' ? 'Подробнее' : 'Заказать'}</button>
+            <button class="btn">Подробнее</button>
         `;
         grid.appendChild(card);
     });
@@ -101,7 +142,10 @@ function openDetail(item) {
     document.getElementById('detail-description').innerText = item.description || "Отличный выбор для подарка!";
     document.getElementById('detail-price').innerText = `${item.price} грн`;
 
-    document.getElementById('detail-order-btn').onclick = () => order(item.name, item.price);
+    document.getElementById('detail-order-btn').onclick = (e) => {
+        e.stopPropagation(); // Чтобы не срабатывал клик по карточке под кнопкой
+        order(item.name, item.price);
+    };
 }
 
 // 5. ОТПРАВКА В N8N
