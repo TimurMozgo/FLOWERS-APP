@@ -9,13 +9,13 @@
 </head>
 <body>
 
-<div id="welcome-screen" class="screen">
-    <div style="font-size: 60px;">🌷</div>
-    <h1>FLOWERS BY T</h1>
-    <button class="btn" onclick="showCategories()">Смотреть каталог</button>
-</div>
+    <div id="welcome-screen" class="screen">
+        <div style="font-size: 60px;">🌷</div>
+        <h1>FLOWERS BY T</h1>
+        <button class="btn" onclick="showCategories()">Смотреть каталог</button>
+    </div>
 
-    <div id="categories-screen" class="screen">
+    <div id="categories-screen" class="screen" style="display: none;">
         <h1>КАТЕГОРИИ</h1>
         <div class="shop-grid">
             <div class="card" onclick="showCategory('bouquets')">
@@ -51,23 +51,34 @@
         </div>
     </div>
 
-<div id="shop-screen" class="shop-screen" style="display: none;">
-    <h1 id="category-title" style="margin-top: 20px;">КАТАЛОГ</h1>
-    <div id="products-grid" class="shop-grid">
-        </div>
-    <button class="btn" style="background: #333; width: 80%; margin-bottom: 20px;" onclick="goBack()">⬅️ Назад</button>
-</div>
-    <script src="script.js"></script>
+    <div id="shop-screen" class="screen shop-screen" style="display: none;">
+        <h1 id="category-title" style="margin-top: 20px;">КАТАЛОГ</h1>
+        <div id="products-grid" class="shop-grid"></div>
+        <button class="btn btn-back" onclick="goBack()">⬅️ Назад</button>
+    </div>
 
     <div id="product-detail-screen" class="screen" style="display: none;">
         <div id="detail-image-container"></div>
         <h2 id="detail-name"></h2>
-        <p id="detail-description" style="padding: 0 20px; color: #aaa;"></p>
-        <h3 id="detail-price" style="font-size: 24px;"></h3>
+        <p id="detail-description"></p>
+        <h3 id="detail-price"></h3>
         
-        <button class="btn" id="detail-order-btn" style="width: 80%; margin-top: 20px;">Заказать</button>
-        <button class="btn" style="background: #333; width: 80%; margin-top: 15px;" onclick="closeDetail()">⬅️ Назад в каталог</button>
+        <button class="btn" id="detail-order-btn">В корзину</button>
+        <button class="btn" style="background: #333; width: 80%; margin-top: 15px;" onclick="closeDetail()">⬅️ Назад</button>
     </div>
     
+    <div id="cart-fab" onclick="showCart()" style="display: none;">
+        🛒 Корзина (<span id="cart-count">0</span>)
+    </div>
+
+    <div id="cart-screen" class="screen" style="display: none;">
+        <h2>ВАШ ЗАКАЗ</h2>
+        <div id="cart-items-list"></div>
+        <div id="cart-total">ИТОГО: 0 грн</div>
+        <button class="btn" onclick="sendOrder()">Оформить заказ</button>
+        <button class="btn" style="background: #333; margin-top: 10px;" onclick="closeCart()">Назад</button>
+    </div>
+
+    <script src="script.js?v=7"></script>
 </body>
 </html>
