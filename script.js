@@ -27,25 +27,25 @@ function addToCart(name, price) {
     tg.showAlert(`✅ ${name} добавлен в корзину!`);
 }
 
-// НОВАЯ ФУНКЦИЯ: Удаление товара
+// ФУНКЦИЯ УДАЛЕНИЯ
 function removeFromCart(index) {
-    cart.splice(index, 1); // Удаляем 1 элемент по индексу
+    cart.splice(index, 1);
     updateCartUI();
     
     if (tg.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('medium'); // Вибрация при удалении
+        tg.HapticFeedback.impactOccurred('medium');
     }
 
     if (cart.length === 0) {
-        closeCart(); // Если пусто — закрываем корзину
+        closeCart();
     } else {
-        showCart(); // Иначе перерисовываем список
+        showCart(); // Перерисовываем список в корзине
     }
 }
 
 function showCart() {
     // Скрываем все экраны и показываем корзину
-    document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+    document.querySelectorAll('.screen, .shop-screen').forEach(s => s.style.display = 'none');
     const screen = document.getElementById('cart-screen');
     const list = document.getElementById('cart-items-list');
     const totalDiv = document.getElementById('cart-total');
@@ -58,12 +58,12 @@ function showCart() {
         total += item.price;
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
-        // Добавлена кнопка удаления с вызовом removeFromCart(index)
+        // Добавлена кнопка удаления с твоим новым классом
         itemDiv.innerHTML = `
             <span>${item.name}</span>
             <div style="display: flex; align-items: center; gap: 10px;">
-                <span>${item.price} грн</span>
-                <button onclick="removeFromCart(${index})" style="background: #ff4444; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">✕</button>
+                <span style="font-weight: bold;">${item.price} грн</span>
+                <button class="delete-btn" onclick="removeFromCart(${index})">✕</button>
             </div>
         `;
         list.appendChild(itemDiv);
@@ -79,7 +79,7 @@ function closeCart() {
 
 // 3. НАВИГАЦИЯ
 function showCategories() {
-    document.getElementById('welcome-screen').style.display = 'none';
+    document.querySelectorAll('.screen, .shop-screen').forEach(s => s.style.display = 'none');
     document.getElementById('categories-screen').style.display = 'flex';
 }
 
@@ -93,7 +93,7 @@ function closeDetail() {
     document.getElementById('shop-screen').style.display = 'flex';
 }
 
-// 4. ОТРИСОВКА КАТЕГОРИЙ
+// 4. ОТРИСОВКА КАТЕГОРИЙ (ВЕРНУЛ ВСЕ ТВОИ ТОВАРЫ)
 function showCategory(type) {
     document.getElementById('categories-screen').style.display = 'none';
     const shop = document.getElementById('shop-screen');
@@ -143,11 +143,8 @@ function showCategory(type) {
         const card = document.createElement('div');
         card.className = 'card';
         card.onclick = () => openDetail(item);
-
-        const media = `<img src="${item.imgUrl}" class="card-img">`;
-
         card.innerHTML = `
-            ${media}
+            <img src="${item.imgUrl}" class="card-img">
             <p class="product-name">${item.name}</p>
             <p class="price">${item.price} грн</p>
             <button class="btn">Подробнее</button>
@@ -178,7 +175,6 @@ function openDetail(item) {
 // 6. ФИНАЛЬНАЯ ОТПРАВКА В N8N
 function sendOrder() {
     if (cart.length === 0) return;
-
     const total = cart.reduce((sum, i) => sum + i.price, 0);
 
     tg.showConfirm(`Оформить заказ на ${cart.length} товаров на сумму ${total} грн?`, (confirmed) => {
@@ -198,11 +194,11 @@ function sendOrder() {
                 body: JSON.stringify(data)
             })
             .then(() => {
-                tg.showAlert("✅ Аудитор подтвердил заказ! Мы уже собираем товары.");
-                cart = []; // Очистка корзины
+                tg.showAlert("✅ Аудитор подтвердил заказ!");
+                cart = [];
                 updateCartUI();
                 tg.MainButton.hide();
-                showCategories(); // Возврат в меню
+                showCategories();
             })
             .catch(() => {
                 tg.showAlert("❌ Ошибка связи с сервером!");
