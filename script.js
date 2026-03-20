@@ -2,7 +2,7 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 // 1. ТВОЙ WEBHOOK ИЗ N8N (Вставь сюда свою ссылку)
-const n8n_webhook = 'ТВОЙ_WEBHOOK_URL_ИЗ_N8N';
+const n8n_webhook = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
 
 // 2. НАВИГАЦИЯ
 function showCategories() {
