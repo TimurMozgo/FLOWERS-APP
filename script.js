@@ -2,7 +2,7 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 // 1. ТВОЙ WEBHOOK ИЗ N8N (Обязательно вставь свою ссылку!)
-const n8n_webhook = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
+const n8n_webhook = 'https://tiktiok.xyz/webhook/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
 
 let cart = []; // Массив для хранения товаров в корзине
 
