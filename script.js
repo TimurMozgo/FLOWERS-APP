@@ -1,5 +1,5 @@
 // URL твоего Webhook в n8n, который тянет данные из Google Sheets
-const WEBHOOK_URL = 'https://твой-n8n.com/webhook/get-flowers';
+const WEBHOOK_URL = 'https://tiktiok.xyz/webhook-test/e9d8d207-1c6b-44c2-a053-c41479cb32e6';
 
 async function loadProducts() {
     try {
