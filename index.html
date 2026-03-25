@@ -3,18 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flower SPA 2026</title>
+    <title>Flower Garden | Premium</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <h1>🌹 Flower Shop</h1>
+        <p>Свежие букеты с доставкой</p>
     </header>
     
-    <main id="catalog" class="catalog-grid">
-        <div class="loader">Загрузка свежих букетов...</div>
+    <main class="catalog-grid">
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="card-content">
+                <h3>Rose Mix</h3>
+                <p class="price">1200 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Rose Mix', 1200)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1520323232431-11139683e9ff?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="card-content">
+                <h3>Tulips Premium</h3>
+                <p class="price">650 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Tulips', 650)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1595624871930-6e8537998592?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="card-content">
+                <h3>Sunflowers</h3>
+                <p class="price">900 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Sunflowers', 900)">Заказать</button>
+            </div>
+        </div>
     </main>
 
-    <script src="script.js"></script>
+    <script>
+        function buyProduct(name, price) {
+            alert(`Бро, отличный выбор! Букет "${name}" за ${price} грн. Сейчас создаем счет...`);
+            // Тут потом привяжем отправку данных в n8n для оплаты
+        }
+    </script>
 </body>
 </html>
