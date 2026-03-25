@@ -8,22 +8,34 @@
 </head>
 <body>
     <header>
-        <h1>🌹 Flower Shop</h1>
+        <div class="header-content">
+            <h1>🌹 Flower Shop</h1>
+            <button class="catalog-header-btn">КАТАЛОГ ☰</button>
+        </div>
         <p>Свежие букеты с доставкой</p>
     </header>
     
     <main class="catalog-grid">
         <div class="card">
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400');"></div>
             <div class="card-content">
-                <h3>Rose Mix</h3>
+                <h3>Rose Mix Classic</h3>
                 <p class="price">1200 грн</p>
                 <button class="buy-btn" onclick="buyProduct('Rose Mix', 1200)">Заказать</button>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1520323232431-11139683e9ff?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1559563458-527698bf5295?w=400');"></div>
+            <div class="card-content">
+                <h3>White Avalanche</h3>
+                <p class="price">1500 грн</p>
+                <button class="buy-btn" onclick="buyProduct('White Avalanche', 1500)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1520323232431-11139683e9ff?w=400');"></div>
             <div class="card-content">
                 <h3>Tulips Premium</h3>
                 <p class="price">650 грн</p>
@@ -32,20 +44,123 @@
         </div>
 
         <div class="card">
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1595624871930-6e8537998592?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1587316130432-84988f58374a?w=400');"></div>
             <div class="card-content">
-                <h3>Sunflowers</h3>
+                <h3>Purple Spring</h3>
+                <p class="price">700 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Purple Spring', 700)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1523626797181-8c5ae80d40c2?w=400');"></div>
+            <div class="card-content">
+                <h3>Pink Peonies</h3>
+                <p class="price">2100 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Pink Peonies', 2100)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1595624871930-6e8537998592?w=400');"></div>
+            <div class="card-content">
+                <h3>Sunflowers Duo</h3>
                 <p class="price">900 грн</p>
                 <button class="buy-btn" onclick="buyProduct('Sunflowers', 900)">Заказать</button>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=400');"></div>
+            <div class="card-content">
+                <h3>Hydrangea Blue</h3>
+                <p class="price">1800 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Hydrangea Blue', 1800)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1508784411316-02b8cd4d3a3a?w=400');"></div>
+            <div class="card-content">
+                <h3>Mystery Orchid</h3>
+                <p class="price">2500 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Mystery Orchid', 2500)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1562920618-9714397730e2?w=400');"></div>
+            <div class="card-content">
+                <h3>Red Velvet Rose</h3>
+                <p class="price">1350 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Red Velvet', 1350)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1519378304602-45a46766783f?w=400');"></div>
+            <div class="card-content">
+                <h3>Lavender Mist</h3>
+                <p class="price">1100 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Lavender Mist', 1100)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400');"></div>
+            <div class="card-content">
+                <h3>Eustoma Soft</h3>
+                <p class="price">950 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Eustoma Soft', 950)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1464333639182-947ab4441bcd?w=400');"></div>
+            <div class="card-content">
+                <h3>Wild Field</h3>
+                <p class="price">850 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Wild Field', 850)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400');"></div>
+            <div class="card-content">
+                <h3>Lily White</h3>
+                <p class="price">1700 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Lily White', 1700)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1591886960571-74d43a903615?w=400');"></div>
+            <div class="card-content">
+                <h3>Golden Autumn</h3>
+                <p class="price">2800 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Golden Autumn', 2800)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1533616688419-b7a585564566?w=400');"></div>
+            <div class="card-content">
+                <h3>Bright Gerbera</h3>
+                <p class="price">600 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Bright Gerbera', 600)">Заказать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1496062031456-07b8f162a322?w=400');"></div>
+            <div class="card-content">
+                <h3>Morning Dew</h3>
+                <p class="price">1250 грн</p>
+                <button class="buy-btn" onclick="buyProduct('Morning Dew', 1250)">Заказать</button>
+            </div>
+        </div>
     </main>
 
-    <script>
-        function buyProduct(name, price) {
-            alert(`Бро, отличный выбор! Букет "${name}" за ${price} грн. Сейчас создаем счет...`);
-            // Тут потом привяжем отправку данных в n8n для оплаты
-        }
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
