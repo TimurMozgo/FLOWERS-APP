@@ -1,88 +1,78 @@
-// Инициализация Telegram WebApp
 const tg = window.Telegram.WebApp;
-tg.expand(); // Разворачиваем на весь экран
+tg.expand();
 
 let currentProduct = { name: '', price: 0 };
 let quantity = 1;
 
-/**
- * Открывает окно заказа
- * @param {string} name - Название букета
- * @param {number} price - Цена за 1 шт
- * @param {string} imgUrl - Ссылка на фото (необязательно)
- */
+// Твоя функция из кнопок HTML
 function buyProduct(name, price, imgUrl) {
+    console.log("Заказ букета:", name, price);
+    
     currentProduct = { name, price };
     quantity = 1;
     
-    // Заполняем текстовые данные
-    document.getElementById('modalProductName').innerText = name;
-    document.getElementById('flowerQty').value = quantity;
-    
-    // Если передали картинку — обновляем её в модалке
-    const modalImg = document.getElementById('modalProductImg');
-    if (modalImg && imgUrl) {
-        modalImg.style.backgroundImage = `url('${imgUrl}')`;
+    // 1. Заполняем название
+    const nameElem = document.getElementById('modalProductName');
+    if (nameElem) nameElem.innerText = name;
+
+    // 2. Заполняем цену за 1 шт (базовую)
+    const priceElem = document.getElementById('modalProductPrice');
+    if (priceElem) priceElem.innerText = price + " грн/шт";
+
+    // 3. Ставим картинку (если она есть)
+    const imgElem = document.getElementById('modalProductImg');
+    if (imgElem && imgUrl) {
+        imgElem.style.backgroundImage = `url('${imgUrl}')`;
     }
+
+    // 4. Сбрасываем количество
+    const qtyInput = document.getElementById('flowerQty');
+    if (qtyInput) qtyInput.value = quantity;
     
     updateTotal();
 
-    // Показываем окно
+    // 5. ПОКАЗЫВАЕМ ОКНО
     const modal = document.getElementById('orderModal');
-    modal.style.display = 'flex';
-    
-    // Виброотклик (для кайфа в Telegram)
-    if (tg.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('medium');
+    if (modal) {
+        modal.style.display = 'flex';
+    } else {
+        console.error("Ошибка: Блок с id='orderModal' не найден!");
     }
+
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
 }
 
-// Изменение количества (+ или -)
 function changeQty(delta) {
     quantity = Math.max(1, quantity + delta);
-    document.getElementById('flowerQty').value = quantity;
-    updateTotal();
+    const qtyInput = document.getElementById('flowerQty');
+    if (qtyInput) qtyInput.value = quantity;
     
-    if (tg.HapticFeedback) {
-        tg.HapticFeedback.selectionChanged();
-    }
+    updateTotal();
+    if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
 }
 
-// Пересчет итоговой суммы
 function updateTotal() {
     const total = currentProduct.price * quantity;
-    const totalElement = document.getElementById('totalPrice');
-    if (totalElement) {
-        totalElement.innerText = total.toLocaleString(); // Красивое разделение тысяч
-    }
+    const totalDisplay = document.getElementById('totalPrice');
+    if (totalDisplay) totalDisplay.innerText = total;
 }
 
-// Закрытие окна
 function closeModal() {
     document.getElementById('orderModal').style.display = 'none';
 }
 
-// Подтверждение заказа
 function confirmOrder() {
     const total = currentProduct.price * quantity;
-    
-    // Показываем красивое подтверждение в стиле Telegram
-    tg.showConfirm(`Подтверждаете заказ: ${currentProduct.name} (${quantity} шт.) на сумму ${total} грн?`, (isConfirmed) => {
-        if (isConfirmed) {
-            // Тут в будущем будет отправка данных в n8n/Bot
-            tg.showAlert(`Босс, заказ принят! Скоро свяжемся.`);
+    tg.showConfirm(`Подтверждаете заказ: ${currentProduct.name} на сумму ${total} грн?`, (ok) => {
+        if (ok) {
+            tg.showAlert("Босс, заказ принят! Готовим счет.");
             closeModal();
-            
-            // Если нужно закрыть Mini App после заказа:
-            // tg.close(); 
         }
     });
 }
 
-// Закрытие модалки при клике на темный фон
+// Закрытие по клику на фон
 window.onclick = function(event) {
     const modal = document.getElementById('orderModal');
-    if (event.target == modal) {
-        closeModal();
-    }
+    if (event.target == modal) closeModal();
 }
