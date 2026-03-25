@@ -3,82 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flowers by T</title>
+    <title>Flower SPA 2026</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-
-    <div id="welcome-screen" class="screen">
-        <div style="font-size: 60px;">🌷</div>
-        <h1>FLOWERS BY T</h1>
-        <button class="btn" onclick="showCategories()">Смотреть каталог</button>
-    </div>
-
-    <div id="categories-screen" class="screen" style="display: none;">
-        <h1>КАТЕГОРИИ</h1>
-        <div class="shop-grid">
-            <div class="card" onclick="showCategory('bouquets')">
-                <div class="icon">💐</div>
-                <p class="product-name">Букеты</p>
-                <button class="btn">Открыть</button>
-            </div>
-            <div class="card" onclick="showCategory('dacha')">
-                <div class="icon">🏡</div>
-                <p class="product-name">Для дачи</p>
-                <button class="btn">Открыть</button>
-            </div>
-            <div class="card" onclick="showCategory('seeds')">
-                <div class="icon">🌱</div>
-                <p class="product-name">Семена</p>
-                <button class="btn">Открыть</button>
-            </div>
-            <div class="card" onclick="showCategory('fertilizers')">
-                <div class="icon">🧪</div>
-                <p class="product-name">Удобрения</p>
-                <button class="btn">Открыть</button>
-            </div>
-            <div class="card" onclick="showCategory('care')">
-                <div class="icon">🧹</div>
-                <p class="product-name">Инструменты</p>
-                <button class="btn">Открыть</button>
-            </div>
-            <div class="card" onclick="showCategory('pots')">
-                <div class="icon">🪴</div>
-                <p class="product-name">Комнатные</p>
-                <button class="btn">Открыть</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="shop-screen" class="screen shop-screen" style="display: none;">
-        <h1 id="category-title" style="margin-top: 20px;">КАТАЛОГ</h1>
-        <div id="products-grid" class="shop-grid"></div>
-        <button class="btn btn-back" onclick="goBack()">⬅️ Назад</button>
-    </div>
-
-    <div id="product-detail-screen" class="screen" style="display: none;">
-        <div id="detail-image-container"></div>
-        <h2 id="detail-name"></h2>
-        <p id="detail-description"></p>
-        <h3 id="detail-price"></h3>
-        
-        <button class="btn" id="detail-order-btn">В корзину</button>
-        <button class="btn" style="background: #333; width: 80%; margin-top: 15px;" onclick="closeDetail()">⬅️ Назад</button>
-    </div>
+    <header>
+        <h1>🌹 Flower Shop</h1>
+    </header>
     
-    <div id="cart-fab" onclick="showCart()" style="display: none;">
-        🛒 Корзина (<span id="cart-count">0</span>)
-    </div>
+    <main id="catalog" class="catalog-grid">
+        <div class="loader">Загрузка свежих букетов...</div>
+    </main>
 
-    <div id="cart-screen" class="screen" style="display: none;">
-        <h2>ВАШ ЗАКАЗ</h2>
-        <div id="cart-items-list"></div>
-        <div id="cart-total">ИТОГО: 0 грн</div>
-        <button class="btn main-btn" onclick="sendOrder()">ОФОРМИТЬ ЗАКАЗ</button>
-        <button class="btn" style="background: #333; margin-top: 10px;" onclick="closeCart()">Назад</button>
-    </div>
-
-    <script src="script.js?v=7"></script>
+    <script src="script.js"></script>
 </body>
 </html>
